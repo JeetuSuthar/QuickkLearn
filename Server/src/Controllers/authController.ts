@@ -1,8 +1,8 @@
 // controllers/authController.ts
 import { Request, Response } from 'express';
-import pool from '../Models/db';
+import pool from '../Models/db.ts';
 import bcrypt from 'bcrypt';
-import { User } from '../Models/models'
+import { User } from '../Models/models.ts'
 
 export const signup = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
