@@ -26,3 +26,8 @@ export const signup = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+
+export const signin = async(req : Request, res:Response)=>{
+  
+}
