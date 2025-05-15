@@ -3,7 +3,13 @@ import { Request, Response } from 'express';
 import pool from '../Models/db.ts';
 import bcrypt from 'bcrypt';
 import { User } from '../Models/models.ts'
-
+import jwt from 'jsonwebtoken'
+import dotenv from "dotenv"
+dotenv.config()
+const JWT_SECRET=process.env.JWT_SECRET
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET is not defined in environment variables');
+}
 export const signup = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
 
@@ -41,8 +47,11 @@ export const signin = async (req: Request, res: Response) => {
     if (!isEqualpassword) {
       res.status(401).json({ msg: 'Invalid Credentials' })
     }
-    res.status(201).json({msg:"Signin success", user:user})
-    
+    const jwtToken=jwt.sign({id:user.id ,email: user.email},JWT_SECRET,{
+      expiresIn:'1h'
+    })
+    res.status(201).json({msg:"Signin success", user:user,jwtToken})
+
   } catch (error) {
     console.log("Error in signin ", error)
     res.status(500).json({ msg: "Internal server error in signin" })
