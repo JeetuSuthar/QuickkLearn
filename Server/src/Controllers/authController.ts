@@ -42,10 +42,7 @@ export const signin = async (req: Request, res: Response) => {
       res.status(401).json({ msg: 'Invalid Credentials' })
     }
     res.status(201).json({msg:"Signin success", user:user})
-
-
-
-
+    
   } catch (error) {
     console.log("Error in signin ", error)
     res.status(500).json({ msg: "Internal server error in signin" })
